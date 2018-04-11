@@ -1,7 +1,7 @@
 import React, {
   Component
 } from 'react';
-import './App.css';
+import './App.scss';
 import Header from '../header/Header';
 import ContactList from '../contactList/ContactList'
 
@@ -15,8 +15,8 @@ class App extends Component {
   }
   render() {
     return ( 
-      <div className = "App" >
-        <Header title = 'Contacts' />
+      <div className="app" >
+        <Header title='Contacts' />
         <ContactList contacts={this.state.contacts} />
       </div>
     );

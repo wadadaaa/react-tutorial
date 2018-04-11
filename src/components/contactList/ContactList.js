@@ -1,5 +1,4 @@
 import React from 'react';
-import './ContactList.css'
 import ContactListItem from '../contactListItem/ContactListItem'
 
 class ContactList extends React.Component {

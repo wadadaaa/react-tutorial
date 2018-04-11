@@ -1,5 +1,5 @@
 import React from 'react';
-import './ContactListItem.css'
+import './ContactListItem.scss'
 
 const ContactListItem = (props) => (
     <div className="contact-list-item">
