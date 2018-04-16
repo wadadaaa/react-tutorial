@@ -26,7 +26,7 @@ var contacts = [
   ]
 
 const getContacts = () => {
-    return contacts
+    return Promise.resolve(contacts)
 }
 const getEmptyContact = () => {
     return {
@@ -46,12 +46,12 @@ const filter = (name) => {
 const getContactById = (id) => {
   const res = contacts.filter(currentContact => currentContact.id === id);
   if (!res || res.length === 0) return null
-  return res[0]
+  return Promise.resolve(res[0])
 }
 
 const deleteContact = (id) => {
   contacts = contacts.filter(currentContact => currentContact.id !== id);
-  return contacts
+  return Promise.resolve(contacts)
 }
 
 const saveContact = (contact) => {
@@ -72,17 +72,23 @@ export default contactService
 // server
 const updateContact = (contact) => {
     console.log(contact.id)
-    const result = getContactById(contact.id)
-    if (!result) return null
-    result.name = contact.name
-    result.title = contact.title
-    result.company = contact.company
-    result.email = contact.email
-    result.phone = contact.phone
 
+    return getContactById(contact.id).then( result => {
+
+      if (!result) return null
+
+      result.name = contact.name
+      result.title = contact.title
+      result.company = contact.company
+      result.email = contact.email
+      result.phone = contact.phone
+      return result
+    })
+    
 }
 
 const createContact = (contact) => {
     contact.id = contacts.length + 1 + ""
     contacts.push(contact)
+    return Promise.resolve(contacts)
 }
