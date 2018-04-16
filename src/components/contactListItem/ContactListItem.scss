@@ -12,9 +12,6 @@
         margin: 10px;
     }
     
-    .contact-img-box {
-    }
-    
     .contact-details-box {
         width: 100%;
         text-align: left;
@@ -29,4 +26,20 @@
         margin: 5px 0 0 0;
         color: #c8c8c8;
     }
+    .btn-group {
+        position: relative;
+        
+        .delete-contact-button,.edit-contact-button  {
+            right: 0;
+            bottom: 0;
+            position: absolute;
+        }
+        .edit-contact-button {
+            right: 0;
+            top: 0;
+            position: absolute;
+            margin: 2px;
+        }
+    }
+
 }
