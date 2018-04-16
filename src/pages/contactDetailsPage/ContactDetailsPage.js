@@ -1,36 +1,53 @@
 import React, { Component } from "react";
 import "./contactDetailsPage.scss";
-// import ContactList from '../contactList/ContactList'
-import contactService from "../../services/contactService";
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux';
+import { loadContact } from '../../actions/index'
 
-var testContact = contactService.getContactById("5acdfdc1637e0f16b00ad333");
-
-// testContact.name = "11111"
-// contactService.saveContact(testContact)
 
 class ContactDetailsPage extends Component {
+  
+  componentDidMount() {
+    const contactId = this.props.match.params.id
+    this.props.loadContact(contactId);
+  }
+
   renderErrorMessage() {
     return "Contact not found";
   }
-  renderContact(testContact) {
+
+  renderContact(currContact) {
+    
     return (
       <div>
         <ul>
-          <li>{testContact.name}</li>
-          <li>{testContact.title}</li>
+          <li>{currContact.name}</li>
+          <li>{currContact.title}</li>
         </ul>
       </div>
     );
   }
+
   render() {
     return (
       <div className="contacts-detail-page">
-        {testContact
-          ? this.renderContact(testContact)
-          : this.renderErrorMessage()}
+        {this.renderContact(this.props.contact)}
       </div>
     );
   }
 }
 
-export default ContactDetailsPage;
+function mapStateToProps(state) {
+  return {
+    contact: state.contact
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators( {
+    loadContact: loadContact
+
+  }, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ContactDetailsPage);

@@ -20,7 +20,7 @@ class App extends Component {
                         <Link to="/">Home</Link>
                     </li>
                     <li>
-                        <Link to="/detail/2">Contact Detail</Link>
+                        <Link to="/edit">Add Contact</Link>
                     </li>
                 </ul>
                 <Route exact path="/" component={ContactPage} />

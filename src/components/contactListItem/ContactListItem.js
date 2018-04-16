@@ -14,6 +14,7 @@ const ContactListItem = (props) => (
             <div className="contact-name">{props.contact.name}</div>
             <div className="contact-title">{props.contact.title}</div>
             <div className="btn-group">
+                <button className="detail-contact-button" onClick={props.onItemDetail}>Details</button>
                 <button className="edit-contact-button" onClick={props.onItemEdit}>Edit</button>
                 <button className="delete-contact-button" onClick={props.onItemRemove}>Delete</button>
             </div>

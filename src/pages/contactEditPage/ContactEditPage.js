@@ -2,18 +2,25 @@ import React, { Component } from "react";
 import "./contactEditPage.scss";
 import contactService from "../../services/contactService";
 import Input from "../../components/input/input"
-
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux';
+import { loadContact } from '../../actions/index'
 
 class ContactEditPage extends Component {
     constructor(props) {
         super(props)
-        const contactId = props.match.params.id
-        const contact = contactId ? 
-          contactService.getContactById(contactId) : 
-          contactService.getEmptyContact()
+        
+        const contact = contactService.getEmptyContact()
         this.state = {contact}
 
+        const contactId = props.match.params.id
+        if (contactId) props.loadContact(contactId)
     }
+
+    componentWillReceiveProps(nextProps) {
+      this.setState({contact: nextProps.contact})
+    }
+
     handleChange = (event, inputId) => {
       const updatedContact = {...this.state.contact, [inputId]: event.target.value} //create a new object and add to valid <input> by id(name) a new value
       this.setState({contact: updatedContact});
@@ -65,4 +72,17 @@ class ContactEditPage extends Component {
   }
 }
 
-export default ContactEditPage;
+function mapStateToProps(state) {
+  return {
+    contact: state.contact
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators( {
+    loadContact: loadContact
+
+  }, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ContactEditPage);

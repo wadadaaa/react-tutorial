@@ -5,10 +5,14 @@ import React, {
   import contactService from '../../services/contactService'
   import ContactList from '../../components/contactList/ContactList'
   import SearchBar from '../../components/searchBar/SearchBar'
-  
+  import { bindActionCreators } from 'redux'
+  import { connect } from 'react-redux';
+  import { loadContacts, deleteContact } from '../../actions/index'
+
+
   class ContactPage extends Component {
-    state = {
-      contacts: contactService.getContacts()
+    componentDidMount() {
+      this.props.loadContacts();
     }
 
     search = (value) => {
@@ -20,21 +24,42 @@ import React, {
       const editUrl = `/edit/${currContact.id}`
       this.props.history.push(editUrl)
     }
-    
+
     handleItemRemove = (id) => {
-      const contacts = contactService.deleteContact(id)
-      this.setState({contacts})
+      this.props.deleteContact(id) 
+    }
+
+    handleItemDetail = (currContact) => {
+      const editUrl = `/detail/${currContact.id}`
+      this.props.history.push(editUrl)
     }
     render() {
       return (
         <div className="contact-page" >
           <SearchBar onSearch={this.search}/>
-          <ContactList contacts={this.state.contacts} onItemEdit={this.handleItemEdit} onItemRemove={this.handleItemRemove}/>
-           
+          <ContactList contacts={this.props.contacts}
+                      onItemEdit={this.handleItemEdit}
+                      onItemRemove={this.handleItemRemove}
+                      onItemDetail={this.handleItemDetail}/>
        </div>
+           
       )
     }
   }
 
-  export default ContactPage;
+  function mapStateToProps(state) {
+    return {
+      contacts: state.contacts
+    };
+  }
+  
+  function mapDispatchToProps(dispatch) {
+    return bindActionCreators( {
+      loadContacts: loadContacts,
+      deleteContact: deleteContact
+  
+    }, dispatch)
+  }
+  
+  export default connect(mapStateToProps, mapDispatchToProps)(ContactPage);
   

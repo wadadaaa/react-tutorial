@@ -9,7 +9,8 @@ class ContactList extends React.Component {
             (currContact, i) =>
                 <ContactListItem contact={currContact} key={i} 
                     onItemRemove={() => this.props.onItemRemove(currContact.id)}
-                    onItemEdit={() => this.props.onItemEdit(currContact)}/>
+                    onItemEdit={() => this.props.onItemEdit(currContact)}
+                    onItemDetail={() => this.props.onItemDetail(currContact)}/>
         )
     }
 }
