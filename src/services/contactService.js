@@ -28,6 +28,7 @@ var contacts = [
 const getContacts = () => {
     return Promise.resolve(contacts)
 }
+
 const getEmptyContact = () => {
     return {
       id: "",
@@ -40,7 +41,8 @@ const getEmptyContact = () => {
 }
 const filter = (name) => {
   const res = contacts.filter(currentContact => currentContact.name.toLowerCase().includes(name));
-  return res
+  // console.log("service", res)
+  return Promise.resolve(res)
 }
 
 const getContactById = (id) => {

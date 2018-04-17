@@ -4,7 +4,7 @@ import contactService from "../../services/contactService";
 import Input from "../../components/input/input"
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux';
-import { loadContact } from '../../actions/index'
+import { loadContact, saveContact } from '../../actions/index'
 
 class ContactEditPage extends Component {
     constructor(props) {
@@ -28,7 +28,7 @@ class ContactEditPage extends Component {
 
     onFormSubmit = (event) => {
       event.preventDefault()
-      contactService.saveContact(this.state.contact)
+      this.props.saveContact(this.state.contact)
       this.props.history.push("/")
     }
 
@@ -80,7 +80,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators( {
-    loadContact: loadContact
+    loadContact: loadContact,
+    saveContact: saveContact
 
   }, dispatch)
 }

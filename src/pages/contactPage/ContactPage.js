@@ -2,12 +2,11 @@ import React, {
     Component
   } from 'react';
   import './contactPage.scss';
-  import contactService from '../../services/contactService'
   import ContactList from '../../components/contactList/ContactList'
   import SearchBar from '../../components/searchBar/SearchBar'
   import { bindActionCreators } from 'redux'
   import { connect } from 'react-redux';
-  import { loadContacts, deleteContact } from '../../actions/index'
+  import { loadContacts, deleteContact, filter } from '../../actions/index'
 
 
   class ContactPage extends Component {
@@ -15,8 +14,8 @@ import React, {
       this.props.loadContacts();
     }
 
-    search = (value) => {
-      var contacts = contactService.filter(value)
+    handleSearch = (name) => {
+      var contacts = this.props.filter(name);
       this.setState({contacts})
     }
     
@@ -36,7 +35,7 @@ import React, {
     render() {
       return (
         <div className="contact-page" >
-          <SearchBar onSearch={this.search}/>
+          <SearchBar onSearch={this.handleSearch}/>
           <ContactList contacts={this.props.contacts}
                       onItemEdit={this.handleItemEdit}
                       onItemRemove={this.handleItemRemove}
@@ -56,7 +55,8 @@ import React, {
   function mapDispatchToProps(dispatch) {
     return bindActionCreators( {
       loadContacts: loadContacts,
-      deleteContact: deleteContact
+      deleteContact: deleteContact,
+      filter: filter
   
     }, dispatch)
   }

@@ -7,7 +7,13 @@ export function loadContacts() {
         payload: contactService.getContacts()
     }
 }
-
+export function filter(name) {
+    const res = contactService.filter(name)
+    return {
+        type: TYPES.LOAD_CONTACTS,
+        payload: res
+    }
+}
 export function deleteContact(id) {
     contactService.deleteContact(id)
     return {
