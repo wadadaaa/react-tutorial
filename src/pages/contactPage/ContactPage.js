@@ -20,16 +20,17 @@ import React, {
     }
     
     handleItemEdit = (currContact) => {
-      const editUrl = `/edit/${currContact.id}`
+      const editUrl = `/edit/${currContact._id}`
       this.props.history.push(editUrl)
     }
 
     handleItemRemove = (id) => {
+      debugger
       this.props.deleteContact(id) 
     }
 
     handleItemDetail = (currContact) => {
-      const editUrl = `/detail/${currContact.id}`
+      const editUrl = `/detail/${currContact._id}`
       this.props.history.push(editUrl)
     }
     render() {

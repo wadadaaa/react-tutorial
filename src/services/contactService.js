@@ -1,34 +1,16 @@
-var contacts = [
-    {
-      id: "5acdfdc1637e0f16b00ad333",
-      name: "BuchananRusso",
-      title: "amet",
-      company: "SNIPS",
-      email: "undefined.undefined@snips.net",
-      phone: "+1 (984) 490-3385"
-    },
-    {
-      id: "5acdfdc2aabc67c0c724136d",
-      name: "MoniqueWheeler",
-      title: "mollit",
-      company: "GEOLOGIX",
-      email: "undefined.undefined@geologix.info",
-      phone: "+1 (888) 572-3125"
-    },
-    {
-      id: "5acdfdc28864547945d71749",
-      name: "HeadColeman",
-      title: "ex",
-      company: "ACCEL",
-      email: "undefined.undefined@accel.tv",
-      phone: "+1 (859) 498-3210"
-    }
-  ]
+import axios from 'axios';
 
-const getContacts = () => {
-    return Promise.resolve(contacts)
+var contacts = []
+const getContacts = async () => { 
+  return await axios.get('http://localhost:3000/contacts')
+    .then(function (response) {
+      contacts = response.data
+      return contacts
+    })
+    .catch(function(error){
+      console.log(error)
+    });
 }
-
 const getEmptyContact = () => {
     return {
       id: "",
@@ -45,19 +27,29 @@ const filter = (name) => {
   return Promise.resolve(res)
 }
 
-const getContactById = (id) => {
-  const res = contacts.filter(currentContact => currentContact.id === id);
-  if (!res || res.length === 0) return null
-  return Promise.resolve(res[0])
+const getContactById = async(id) => {
+  return await axios.get(`http://localhost:3000/contacts/${id}`)
+    .then(function (response) {
+      contacts = response.data
+      console.log(contacts)
+      return contacts
+    })
+    .catch(function(error){
+      console.log(error)
+    });
+  // const res = contacts.filter(currentContact => currentContact.id === id);
+  // if (!res || res.length === 0) return null
+  // return Promise.resolve(res[0])
 }
 
 const deleteContact = (id) => {
+  debugger
   contacts = contacts.filter(currentContact => currentContact.id !== id);
   return Promise.resolve(contacts)
 }
 
 const saveContact = (contact) => {
-  return contact.id ? updateContact(contact): createContact(contact)
+  return contact._id ? updateContact(contact): createContact(contact)
 }
 
 const contactService = {
@@ -73,12 +65,28 @@ export default contactService
 
 // server
 const updateContact = (contact) => {
-    console.log(contact.id)
 
-    return getContactById(contact.id).then( result => {
+    return getContactById(contact._id).then( result => {
 
+      // update contact by put
       if (!result) return null
+      // result.name = contact.name
+      // result.title = contact.title
+      // result.company = contact.company
+      // result.email = contact.email
+      // result.phone = contact.phone
+      // console.log('upadated', result)
 
+      // axios.put(`http://localhost:3000/contacts/${id}`,(result)=> {
+      //   console.log('result', result)
+        
+      // })
+      // .then(function (response) {
+      //   console.log(response);
+      // })
+      // .catch(function (error) {
+      //   console.log(error);
+      // });
       result.name = contact.name
       result.title = contact.title
       result.company = contact.company
